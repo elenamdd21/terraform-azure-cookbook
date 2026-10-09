@@ -2,7 +2,7 @@
 
 - [x] Resource Group
 - [x] Storage Account
-- [ ] Virtual Network, Subnet, Network Security Group
+- [x] Virtual Network, Subnet, Network Security Group
 - [ ] Log Analytics Workspace and diagnostic settings
 - [ ] Key Vault and managed identity
 - [ ] Linux VM

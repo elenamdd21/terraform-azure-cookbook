@@ -1,0 +1,8 @@
+subscription_id              = "00000000-0000-0000-0000-000000000000"
+resource_group_name          = "rg-tf-network-demo"
+location                     = "uksouth"
+virtual_network_name         = "vnet-tf-demo"
+address_space                = ["10.30.0.0/16"]
+subnet_name                  = "snet-app"
+subnet_address_prefixes      = ["10.30.1.0/24"]
+network_security_group_name  = "nsg-app"
