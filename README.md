@@ -88,3 +88,15 @@ Replace `examples/storage-account` with the example you want to validate. Exampl
 ## Author
 
 Created as a hands-on Azure and Terraform portfolio project. See the module documentation and workflow history for implementation details.
+
+## License and Usage
+
+Copyright © 2026 the repository author. All rights reserved.
+
+This repository is published publicly for portfolio review and demonstration purposes.
+
+Unless expressly agreed in writing by the copyright holder, no license is granted to use, copy, modify, redistribute, or commercially exploit the source code.
+
+Viewing and forking this public repository on GitHub does not grant any additional rights beyond those provided by applicable law and GitHub's Terms of Service.
+
+For commercial use, licensing, or permission to reuse any part of this project, please contact the copyright holder.
