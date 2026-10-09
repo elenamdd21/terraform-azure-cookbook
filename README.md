@@ -1,95 +1,48 @@
 # Terraform Azure Cookbook
 
-A portfolio repository of reusable Terraform modules and deployable examples for Microsoft Azure.
+Reusable Terraform modules and practical examples for common Azure building blocks. The project emphasizes repeatability, documentation, security-minded defaults, and automated validation without requiring an active Azure subscription for CI checks.
 
-> This repository is built incrementally. It does **not** claim to contain every Azure resource type; Azure has hundreds of resource types and new ones are added regularly.
+## Modules
 
-## Goals
-- Reusable, small Terraform modules for common Azure building blocks.
-- Runnable examples showing how modules fit together.
-- Secure defaults where practical (TLS, HTTPS, least privilege, no committed secrets).
-- Automated formatting and validation in GitHub Actions.
-- Clear prerequisites, deployment instructions, and cleanup steps.
+| Area | Module | Purpose |
+|---|---|---|
+| Foundation | Resource Group | Organize Azure resources and tags |
+| Storage | Storage Account | Configure secure Azure Storage defaults |
+| Networking | Virtual Network, Subnet, NSG | Reusable network foundation and security rules |
+| Identity & secrets | Key Vault + Managed Identity | RBAC-based vault access and workload identity |
+| Monitoring | Log Analytics + Diagnostic Settings | Centralize logs and diagnostics |
+| Compute | Python Function App | Serverless application hosting example |
+| Web hosting | App Service | Web app hosting example |
+| Observability | Application Insights | Application telemetry example |
+| Networking | Private Endpoint | Private connectivity building block |
 
-## Repository layout
+> Module availability depends on the directories currently present in this repository. Check `modules/` and `examples/` for the source of truth.
 
-```text
-.
-├── modules/                 # Reusable modules (one directory per capability)
-├── examples/                # End-to-end, deployable examples
-├── docs/                    # Design notes and contribution guidance
-├── .github/workflows/       # CI checks
-├── .gitignore
-└── README.md
-```
+## Quality checks
 
-## Planned resource coverage
+GitHub Actions can check Terraform formatting, initialize and validate examples without configuring an Azure backend, and run Checkov security scanning. These checks do not create Azure resources.
 
-### Foundations and governance
-- Resource groups, tags, locks
-- Management groups, subscriptions, policy assignments (where permissions allow)
-- Role assignments and managed identities
+## Quick start
 
-### Networking
-- Virtual networks, subnets, NSGs, route tables
-- Public IPs, NAT Gateway, load balancers, Application Gateway
-- Private DNS zones, private endpoints, VPN Gateway, Bastion
+Prerequisites: Terraform CLI and Git.
 
-### Compute and containers
-- Linux/Windows virtual machines, VM scale sets
-- Azure Container Registry, Container Apps, AKS
-- App Service plans, Web Apps, Functions
-
-### Storage and data
-- Storage accounts, containers, file shares
-- Key Vault
-- Azure SQL, PostgreSQL Flexible Server, Cosmos DB
-- Event Hubs, Service Bus
-
-### Monitoring and operations
-- Log Analytics, Application Insights, diagnostic settings
-- Alerts, action groups, backup vaults
-
-### Integration and analytics
-- Data Factory, Databricks workspace, Synapse resources where appropriate
-
-## Requirements
-- Terraform >= 1.6
-- Azure CLI
-- An Azure subscription with permission to create the resources in the chosen example
-- AzureRM provider version constrained in each root configuration
-
-## Authentication
-For local development, use Azure CLI authentication:
-
-```bash
-az login
-az account set --subscription "<SUBSCRIPTION_ID>"
-```
-
-Do not commit credentials, subscription-specific secrets, state files, `.tfvars` files containing secrets, or real customer configuration.
-
-## Working on an example
-
-1. Change to an example directory.
-2. Copy `terraform.tfvars.example` to `terraform.tfvars` and fill in non-secret values.
-3. Run:
-
-```bash
-terraform init
+```powershell
 terraform fmt -recursive
-terraform validate
-terraform plan
-terraform apply
+terraform -chdir=examples/resource-group init -backend=false
+terraform -chdir=examples/resource-group validate
 ```
 
-4. When finished, clean up resources created by the example:
+Replace `examples/resource-group` with another example directory to validate a different module composition.
 
-```bash
-terraform destroy
-```
+## Security
 
-Always inspect the plan and expected costs before applying. Some resources can incur charges even when idle.
+- Review example values before using them in a real environment.
+- Configure approved network access and identity permissions for your own environment.
+- Never commit credentials, Terraform state files, or secret values.
+- Do not run `terraform apply` unless you intentionally want to create billable Azure resources.
 
-## Status
-Initial scaffold. Modules should be added one by one with input validation, outputs, examples, and documented cost/security considerations.
+See [`docs/SECURITY-SCANNING.md`](docs/SECURITY-SCANNING.md) for Checkov workflow guidance and [`docs/ROADMAP.md`](docs/ROADMAP.md) for planned improvements.
+
+## Disclaimer
+
+This is a learning and portfolio project. Validate module behavior, provider versions, Azure service requirements, and security settings before production use.
