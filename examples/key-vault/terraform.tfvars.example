@@ -1,0 +1,12 @@
+subscription_id                  = "00000000-0000-0000-0000-000000000000"
+tenant_id                        = "00000000-0000-0000-0000-000000000000"
+resource_group_name              = "rg-tf-keyvault-demo"
+location                         = "uksouth"
+key_vault_name                   = "kv-tf-cookbook-demo-123"
+managed_identity_name            = "id-tf-cookbook-demo"
+sku_name                         = "standard"
+soft_delete_retention_days       = 90
+purge_protection_enabled         = true
+public_network_access_enabled    = true
+network_default_action           = "Deny"
+allowed_ip_ranges                = []
