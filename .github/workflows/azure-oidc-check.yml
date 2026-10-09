@@ -1,0 +1,26 @@
+name: Azure OIDC connection check
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  verify-azure-identity:
+    name: Verify GitHub OIDC to Azure
+    runs-on: ubuntu-latest
+    environment: azure-oidc-check
+    steps:
+      - name: Sign in to Azure using federated credentials
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Confirm Azure account context
+        uses: azure/CLI@v2
+        with:
+          inlineScript: az account show --query '{name:name, tenantId:tenantId, id:id}' --output table
