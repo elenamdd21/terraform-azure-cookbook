@@ -1,0 +1,9 @@
+subscription_id                  = "00000000-0000-0000-0000-000000000000"
+resource_group_name              = "rg-tf-storage-demo"
+storage_account_name             = "sttfcookbookdemo123"
+location                         = "uksouth"
+account_tier                     = "Standard"
+account_replication_type          = "LRS"
+access_tier                      = "Hot"
+public_network_access_enabled    = true
+shared_access_key_enabled        = true
