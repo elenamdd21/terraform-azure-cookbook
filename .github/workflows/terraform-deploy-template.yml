@@ -1,0 +1,25 @@
+# TEMPLATE ONLY: copy to a deployment workflow only after configuring GitHub OIDC
+# federation in Microsoft Entra ID, repository/environment protections, and Azure RBAC.
+# This workflow intentionally does not run automatically and is not a production-ready deployment.
+name: Terraform Azure Deployment Template
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "GitHub environment name"
+        required: true
+        default: "dev"
+jobs:
+  deployment-template:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deployment guidance
+        run: |
+          echo "Template only: configure Azure OIDC login, least-privilege RBAC,"
+          echo "Terraform state backend, approvals, and plan review before enabling apply."
+          echo "No Azure login, plan, or apply is performed by this template."
