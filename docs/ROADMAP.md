@@ -1,14 +1,19 @@
-# Roadmap
+# Terraform Azure Cookbook — Roadmap
 
+Reusable Terraform modules and examples for common Azure building blocks.
+
+## Completed
 - [x] Resource Group
 - [x] Storage Account
-- [x] Virtual Network, Subnet, Network Security Group
-- [x] Key Vault and user-assigned managed identity
-- [x] Log Analytics Workspace and diagnostic settings
-- [ ] Linux VM
-- [ ] App Service / Function App
-- [ ] Azure SQL and PostgreSQL Flexible Server
+- [x] Networking: Virtual Network, subnet, Network Security Group
+- [x] Key Vault and User-assigned Managed Identity
+- [x] Log Analytics Workspace and Diagnostic Settings
+- [x] Linux Azure Function App (Python) with system-assigned Managed Identity
+
+## Potential next modules
+- [ ] Application Insights
+- [ ] Azure SQL Database
 - [ ] Private Endpoint and Private DNS
-- [ ] Container Registry and AKS
-- [ ] Azure Databricks workspace
-- [ ] Monitoring alerts and action groups
+- [ ] Function App deployment workflow and sample Python function
+
+Examples are for learning and portfolio purposes. Validate configuration and review security, pricing, and regional availability before deploying.

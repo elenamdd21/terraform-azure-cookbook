@@ -1,0 +1,8 @@
+# Replace placeholder names with globally unique values before deployment.
+# Provide secrets through a secure mechanism; do not commit real credentials.
+subscription_id = "00000000-0000-0000-0000-000000000000"
+resource_group_name = "rg-tf-function-example"
+location = "uksouth"
+storage_account_name = "sttfexample123456"
+function_app_name = "func-tf-example-123456"
+app_service_plan_name = "asp-tf-function-example"
