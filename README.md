@@ -1,48 +1,90 @@
 # Terraform Azure Cookbook
 
-Reusable Terraform modules and practical examples for common Azure building blocks. The project emphasizes repeatability, documentation, security-minded defaults, and automated validation without requiring an active Azure subscription for CI checks.
+Reusable Terraform modules for common Azure infrastructure patterns, with examples, documentation, and automated quality checks.
+
+> **Project status:** Portfolio / learning project. The examples are validated in CI; they have not necessarily been deployed to a live Azure subscription. Review and adapt every configuration to your organisation's security and compliance requirements before production use.
+
+## What this project demonstrates
+
+- Reusable Terraform module design with variables and outputs
+- Azure infrastructure patterns and security-conscious defaults
+- Example configurations that compose modules together
+- Automated formatting and Terraform validation with GitHub Actions
+- Static infrastructure security scanning with Checkov
+- Documentation for setup, usage, and deployment considerations
 
 ## Modules
 
-| Area | Module | Purpose |
-|---|---|---|
-| Foundation | Resource Group | Organize Azure resources and tags |
-| Storage | Storage Account | Configure secure Azure Storage defaults |
-| Networking | Virtual Network, Subnet, NSG | Reusable network foundation and security rules |
-| Identity & secrets | Key Vault + Managed Identity | RBAC-based vault access and workload identity |
-| Monitoring | Log Analytics + Diagnostic Settings | Centralize logs and diagnostics |
-| Compute | Python Function App | Serverless application hosting example |
-| Web hosting | App Service | Web app hosting example |
-| Observability | Application Insights | Application telemetry example |
-| Networking | Private Endpoint | Private connectivity building block |
+| Module | Purpose |
+|---|---|
+| `resource-group` | Creates an Azure Resource Group |
+| `storage-account` | Creates an Azure Storage Account with configurable security and replication settings |
+| `networking` | Creates a Virtual Network, subnet, Network Security Group, and association |
+| `key-vault` | Creates an Azure Key Vault configured for RBAC, soft delete, and purge protection |
+| `log-analytics` | Creates a Log Analytics workspace |
+| `diagnostic-setting` | Sends supported resource diagnostic logs and metrics to a Log Analytics workspace |
+| `function-app` | Example module for a Python Azure Function App |
+| `app-service` | Example module for an Azure App Service / Web App |
+| `application-insights` | Example module for application monitoring |
+| `private-endpoint` | Example module for private connectivity patterns |
 
-> Module availability depends on the directories currently present in this repository. Check `modules/` and `examples/` for the source of truth.
+Check the module README files for exact inputs, outputs, provider requirements, and limitations. Not every module has been tested against a live Azure subscription.
+
+## Repository layout
+
+```text
+.
+├── .github/
+│   └── workflows/       # Terraform CI and optional Azure OIDC workflow
+├── modules/             # Reusable Terraform modules
+├── examples/            # Example compositions of modules
+└── docs/                # Guides and project documentation
+```
 
 ## Quality checks
 
-GitHub Actions can check Terraform formatting, initialize and validate examples without configuring an Azure backend, and run Checkov security scanning. These checks do not create Azure resources.
+The unified Terraform CI workflow is intended to:
+
+1. Check formatting with `terraform fmt -check -recursive`.
+2. Initialise each example without a remote backend.
+3. Run `terraform validate` for each example.
+4. Run Checkov to surface common infrastructure-as-code security findings.
+
+Check the **Actions** tab for the latest workflow status. Checkov findings may initially be reported in soft-fail mode; review and remediate findings rather than assuming a passing workflow means the configuration is production-ready.
 
 ## Quick start
 
-Prerequisites: Terraform CLI and Git.
+Prerequisites:
+- Terraform CLI compatible with the version pinned in the workflow
+- AzureRM provider version compatible with the module's provider constraints
+- Azure access only when you choose to plan or deploy resources
+
+Validate an example locally:
 
 ```powershell
 terraform fmt -recursive
-terraform -chdir=examples/resource-group init -backend=false
-terraform -chdir=examples/resource-group validate
+terraform -chdir=examples/storage-account init -backend=false
+terraform -chdir=examples/storage-account validate
 ```
 
-Replace `examples/resource-group` with another example directory to validate a different module composition.
+Replace `examples/storage-account` with the example you want to validate. Example paths depend on which folders currently exist in the repository.
 
-## Security
+## Safety and cost
 
-- Review example values before using them in a real environment.
-- Configure approved network access and identity permissions for your own environment.
-- Never commit credentials, Terraform state files, or secret values.
-- Do not run `terraform apply` unless you intentionally want to create billable Azure resources.
+- `terraform validate` checks configuration syntax and internal consistency; it does **not** prove that an Azure deployment will succeed.
+- `terraform init -backend=false` and `terraform validate` do not create Azure resources.
+- Review security findings, allowed network ranges, RBAC scopes, diagnostic categories, and service-specific requirements before deployment.
+- Some resources may incur charges if deployed. Review Azure pricing and clean up test resources when finished.
+- Purge protection, once enabled on a Key Vault, cannot simply be disabled; consider this carefully in disposable test environments.
 
-See [`docs/SECURITY-SCANNING.md`](docs/SECURITY-SCANNING.md) for Checkov workflow guidance and [`docs/ROADMAP.md`](docs/ROADMAP.md) for planned improvements.
+## Future improvements
 
-## Disclaimer
+- Add tests for module inputs and outputs, and deployment tests in a dedicated Azure subscription.
+- Pin third-party GitHub Actions to full commit SHAs.
+- Add pull-request checks, branch protection, and a reviewed security baseline.
+- Add examples using remote state and workload identity federation (OIDC), with least-privilege permissions.
+- Publish a versioned module release process.
 
-This is a learning and portfolio project. Validate module behavior, provider versions, Azure service requirements, and security settings before production use.
+## Author
+
+Created as a hands-on Azure and Terraform portfolio project. See the module documentation and workflow history for implementation details.
