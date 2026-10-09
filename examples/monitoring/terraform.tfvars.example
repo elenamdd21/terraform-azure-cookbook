@@ -1,0 +1,9 @@
+subscription_id           = "00000000-0000-0000-0000-000000000000"
+resource_group_name       = "rg-tf-monitoring-demo"
+location                  = "uksouth"
+workspace_name            = "law-tf-monitoring-demo"
+retention_in_days         = 30
+daily_quota_gb            = -1
+storage_account_name      = "sttfmonitoringdemo123"
+storage_log_categories    = []
+storage_metric_categories = []

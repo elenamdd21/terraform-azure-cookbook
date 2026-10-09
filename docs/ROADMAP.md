@@ -4,7 +4,7 @@
 - [x] Storage Account
 - [x] Virtual Network, Subnet, Network Security Group
 - [x] Key Vault and user-assigned managed identity
-- [ ] Log Analytics Workspace and diagnostic settings
+- [x] Log Analytics Workspace and diagnostic settings
 - [ ] Linux VM
 - [ ] App Service / Function App
 - [ ] Azure SQL and PostgreSQL Flexible Server
